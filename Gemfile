@@ -34,6 +34,7 @@ gem "seedbank"
 gem "thin"
 gem "pundit"
 gem "rack-canonical-host"
+gem "omniauth-google-oauth2"
 
 group :staging, :production do
   gem "rails_12factor"
