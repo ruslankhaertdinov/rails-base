@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
 
   validates :full_name, presence: true
 
+  has_many :social_links
+
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_initialize.tap do |user|
       user.email = auth.info.email
@@ -21,5 +23,12 @@ class User < ActiveRecord::Base
 
   def full_name_with_email
     "#{self[:full_name]} (#{email})"
+  end
+
+  def apply_omniauth(auth)
+    self.email = auth.info.email
+    self.full_name = auth.info.name
+    self.password = Devise.friendly_token[0,20]
+    social_links.build(provider: auth.provider, uid: auth.uid)
   end
 end
