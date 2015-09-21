@@ -16,7 +16,7 @@ class SocialLinksController < ApplicationController
       redirect_to social_links_url
     else
       user = User.new(email: omniauth.info.email, full_name: omniauth.info.name, password: '123456')
-      user.social_links.build(provider: omniauth['provider'], uid: omniauth['uid'])
+      user.apply_omniauth(omniauth)
       user.skip_confirmation!
       if user.save(validate: false)
         flash[:notice] = "Signed in successfully."
