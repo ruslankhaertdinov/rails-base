@@ -28,13 +28,14 @@ gem "devise"
 gem "google-analytics-rails"
 gem "interactor"
 gem "kaminari"
+gem 'omniauth-facebook'
+gem "omniauth-google-oauth2"
+gem "pundit"
 gem "responders"
+gem "rack-canonical-host"
 gem "rollbar", "~> 0.10.3"
 gem "seedbank"
 gem "thin"
-gem "pundit"
-gem "rack-canonical-host"
-gem "omniauth-google-oauth2"
 
 group :staging, :production do
   gem "rails_12factor"
