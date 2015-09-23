@@ -11,11 +11,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def handle_callback
     if current_user && social_link
-      flash[:notice] = "Social network already linked."
+      flash[:notice] = "Social profile already linked."
       redirect_to edit_user_registration_url
     elsif current_user
       current_user.social_links.create(provider: auth.provider, uid: auth.uid)
-      flash[:notice] = "Successfully created social link."
+      flash[:notice] = "Successfully linked social profile."
       redirect_to edit_user_registration_url
     elsif social_link
       flash[:notice] = "Signed in successfully."
