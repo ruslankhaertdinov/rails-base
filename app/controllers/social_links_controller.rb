@@ -1,6 +1,7 @@
 class SocialLinksController < ApplicationController
   before_action :authenticate_user!
 
+  expose(:social_links) { current_user.social_links }
   expose(:social_link)
 
   def destroy
