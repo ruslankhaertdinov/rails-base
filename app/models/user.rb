@@ -15,13 +15,12 @@ class User < ActiveRecord::Base
     "#{self[:full_name]} (#{email})"
   end
 
-  def apply_omniauth(auth)
-    self.email = auth.info.email
-    self.full_name = auth.info.name
-    self.password = Devise.friendly_token[0,20]
-    self.skip_confirmation!
-    social_links.build(provider: auth.provider, uid: auth.uid)
-    save
-    self
+  def self.from_omniauth(auth)
+    where(email: auth.info.email).first_or_initialize.tap do |user|
+      user.full_name = auth.info.name
+      user.password = Devise.friendly_token[0, 20]
+      user.skip_confirmation!
+      user.save!
+    end
   end
 end
