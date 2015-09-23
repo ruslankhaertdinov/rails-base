@@ -1,0 +1,14 @@
+h6
+  - if social_links.any?
+    b Linked social networks
+    ul
+      - social_links.each do |social_link|
+        li
+          = "#{social_link.provider_name} (#{social_link.uid})"
+          |  #{link_to "X", social_link, data: {confirm: 'Are you sure you want to remove this social_link option?'}, method: :delete}
+    b Add another service to sign in with:
+  - else
+    b Sign in through one of these services:
+
+  p = link_to "Google", "/users/auth/google_oauth2"
+  p = link_to "Facebook", "/users/auth/facebook"

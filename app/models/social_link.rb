@@ -4,4 +4,12 @@ class SocialLink < ActiveRecord::Base
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first
   end
+
+  def provider_name
+    if provider == "google_oauth2"
+      "Google"
+    else
+      provider.titleize
+    end
+  end
 end
