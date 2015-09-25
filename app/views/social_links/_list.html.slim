@@ -10,5 +10,5 @@ h6
   - else
     b Sign in through one of these services:
 
-  p = link_to "Google", "/users/auth/google_oauth2"
-  p = link_to "Facebook", "/users/auth/facebook"
+  p = link_to "Google", user_omniauth_authorize_path(:google_oauth2)
+  p = link_to "Facebook", user_omniauth_authorize_path(:facebook)

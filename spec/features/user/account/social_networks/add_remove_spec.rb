@@ -1,9 +1,8 @@
 require "rails_helper"
 
 feature "Add/Remove social networks" do
-  let(:user) { FactoryGirl.create(:user, :confirmed) }
-  let(:uid) { "12345" }
-  let(:omniauth_mock) { OmniAuth::AuthHash.new(provider: provider, uid: uid) }
+  let(:user) { create(:user, :confirmed) }
+  let(:omniauth_mock) { OmniAuth::AuthHash.new(provider: provider, uid: "12345") }
 
   before do
     stub_omniauth
@@ -55,7 +54,7 @@ feature "Add/Remove social networks" do
 
   def stub_omniauth
     OmniAuth.config.test_mode                       = true
-    OmniAuth.config.mock_auth[:default]             = omniauth_mock
+    OmniAuth.config.mock_auth[provider.to_sym]      = omniauth_mock
     Rails.application.env_config["omniauth.auth"]   = omniauth_mock
     Rails.application.env_config["devise.mapping"]  = Devise.mappings[:user]
   end
