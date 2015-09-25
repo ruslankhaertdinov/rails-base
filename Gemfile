@@ -28,7 +28,7 @@ gem "devise"
 gem "google-analytics-rails"
 gem "interactor"
 gem "kaminari"
-gem 'omniauth-facebook'
+gem "omniauth-facebook"
 gem "omniauth-google-oauth2"
 gem "pundit"
 gem "responders"

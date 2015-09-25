@@ -5,7 +5,7 @@ class SocialLink < ActiveRecord::Base
   validates :uid, uniqueness: { scope: :provider }
 
   def self.from_omniauth(auth)
-    where(provider: auth.provider, uid: auth.uid).first
+    find_by(provider: auth.provider, uid: auth.uid)
   end
 
   def provider_name

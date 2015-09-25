@@ -1,8 +1,8 @@
 module FeatureHelpers
   def stub_omniauth(provider, omniauth_mock)
-    OmniAuth.config.test_mode                       = true
-    OmniAuth.config.mock_auth[provider]             = omniauth_mock
-    Rails.application.env_config["omniauth.auth"]   = omniauth_mock
+    OmniAuth.config.test_mode                     = true
+    OmniAuth.config.mock_auth[provider]           = omniauth_mock
+    Rails.application.env_config["omniauth.auth"] = omniauth_mock
   end
 
   def omniauth_mock(provider, uid, user_attrs = {})
