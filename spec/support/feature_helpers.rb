@@ -6,16 +6,12 @@ module FeatureHelpers
     Rails.application.env_config["omniauth.auth"]   = omniauth_mock
   end
 
-  def stub_devise
-    Rails.application.env_config["devise.mapping"]  = Devise.mappings[:user]
-  end
-
   def omniauth_mock(provider, uid, user_attrs = {})
-    OmniAuth::AuthHash.new({
+    OmniAuth::AuthHash.new(
       provider: provider,
       uid: uid,
       info: { name: user_attrs[:full_name], email: user_attrs[:email] }
-    })
+    )
   end
 end
 

@@ -6,10 +6,7 @@ feature "Sign Up" do
   let(:registered_user) { User.find_by_email(user_attributes[:email]) }
   let(:omniauth_params) { omniauth_mock(provider, uid, user_attributes) }
 
-  before do
-    stub_omniauth(provider, omniauth_params)
-    stub_devise
-  end
+  before { stub_omniauth(provider, omniauth_params) }
 
   context "when provider is Facebook" do
     let(:provider) { :facebook }

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-feature "Add/Remove social networks" do
+feature "Add/Remove social profiles" do
   let(:uid) { "12345" }
   let(:user) { create(:user, :confirmed) }
   let(:user_attributes) { user.attributes.slice(:full_name, :email) }
@@ -8,7 +8,6 @@ feature "Add/Remove social networks" do
 
   before do
     stub_omniauth(provider, omniauth_params)
-    stub_devise
     login_as user
     visit edit_user_registration_path
   end
