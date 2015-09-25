@@ -1,7 +1,7 @@
 h6
   - if social_links.any?
     b Linked social networks
-    ul
+    ul.js-social-links
       - social_links.each do |social_link|
         li
           = "#{social_link.provider_name} (#{social_link.uid})"
