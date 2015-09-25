@@ -20,18 +20,15 @@ feature "Add/Remove social profiles" do
       expect(page).not_to have_content("Linked social networks")
 
       click_link "Facebook"
-
       expect(page).to have_content("Successfully linked social profile.")
       expect(page).to have_content("Linked social networks")
       expect(page).to have_css(".js-social-links", text: "Facebook")
-      expect(page.all("ul.js-social-links li").size).to eq(1)
 
       click_link "Facebook"
-
       expect(page).to have_content("Social profile already linked.")
-      expect(page.all("ul.js-social-links li").size).to eq(1)
 
-      #click X, expect to delete
+      click_link "X"
+      expect(page).not_to have_content("Linked social networks")
     end
   end
 
@@ -43,16 +40,15 @@ feature "Add/Remove social profiles" do
       expect(page).not_to have_content("Linked social networks")
 
       click_link "Google"
-
       expect(page).to have_content("Successfully linked social profile.")
       expect(page).to have_content("Linked social networks")
       expect(page).to have_css(".js-social-links", text: "Google")
-      expect(page.all("ul.js-social-links li").size).to eq(1)
 
       click_link "Google"
-
       expect(page).to have_content("Social profile already linked.")
-      expect(page.all("ul.js-social-links li").size).to eq(1)
+
+      click_link "X"
+      expect(page).not_to have_content("Linked social networks")
     end
   end
 end
