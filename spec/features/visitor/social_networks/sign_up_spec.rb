@@ -1,37 +1,26 @@
 require "rails_helper"
 
 feature "Sign Up" do
+  let(:uid) { "12345" }
   let(:user_attributes) { attributes_for(:user).slice(:full_name, :email, :password, :password_confirmation) }
   let(:registered_user) { User.find_by_email(user_attributes[:email]) }
-  let(:uid) { "12345" }
-
-  let(:omniauth_mock) do
-    OmniAuth::AuthHash.new(
-      {
-        provider: provider,
-        uid: uid,
-        info: {
-          name: user_attributes[:full_name],
-          email: user_attributes[:email]
-        }
-      }
-    )
-  end
+  let(:omniauth_params) { omniauth_mock(provider, uid, user_attributes) }
 
   before do
-    OmniAuth.config.test_mode                       = true
-    OmniAuth.config.mock_auth[:default]             = omniauth_mock
-    Rails.application.env_config["omniauth.auth"]   = omniauth_mock
-    Rails.application.env_config["devise.mapping"]  = Devise.mappings[:user]
+    stub_omniauth(provider, omniauth_params)
+    stub_devise
   end
 
   context "when provider is Facebook" do
-    let(:provider) { 'facebook' }
+    let(:provider) { :facebook }
 
     context "when user and social link not exist" do
-      scenario "Visitor signs up through provider" do
+      before do
         visit root_path
         click_link "Sign in with Facebook"
+      end
+
+      scenario "Visitor signs up through provider" do
         expect(page).to have_content("Signed up successfully.")
         expect(page).to have_text(registered_user.email)
       end
@@ -42,11 +31,11 @@ feature "Sign Up" do
 
       before do
         user.social_links.create(provider: provider, uid: uid)
+        visit root_path
+        click_link "Sign in with Facebook"
       end
 
       scenario "Visitor signs in through provider" do
-        visit root_path
-        click_link "Sign in with Facebook"
         expect(page).to have_content("Signed in successfully.")
         expect(page).to have_text(registered_user.email)
       end
@@ -54,12 +43,15 @@ feature "Sign Up" do
   end
 
   context "when provider is Google" do
-    let(:provider) { 'google_oauth2' }
+    let(:provider) { :google_oauth2 }
 
     context "when user and social link not exist" do
-      scenario "Visitor signs up through provider" do
+      before do
         visit root_path
         click_link "Sign in with Google"
+      end
+
+      scenario "Visitor signs up through provider" do
         expect(page).to have_content("Signed up successfully.")
         expect(page).to have_text(registered_user.email)
       end
@@ -70,22 +62,14 @@ feature "Sign Up" do
 
       before do
         user.social_links.create(provider: provider, uid: uid)
+        visit root_path
+        click_link "Sign in with Google"
       end
 
       scenario "Visitor signs in through provider" do
-        visit root_path
-        click_link "Sign in with Google"
         expect(page).to have_content("Signed in successfully.")
         expect(page).to have_text(registered_user.email)
       end
-    end
-  end
-
-  def provider_title(provider)
-    if provider == "google_oauth2"
-      "Google"
-    else
-      provider.titleize
     end
   end
 end

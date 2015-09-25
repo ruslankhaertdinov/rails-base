@@ -1,17 +1,20 @@
 require "rails_helper"
 
 feature "Add/Remove social networks" do
+  let(:uid) { "12345" }
   let(:user) { create(:user, :confirmed) }
-  let(:omniauth_mock) { OmniAuth::AuthHash.new(provider: provider, uid: "12345") }
+  let(:user_attributes) { user.attributes.slice(:full_name, :email) }
+  let(:omniauth_params) { omniauth_mock(provider, uid, user_attributes) }
 
   before do
-    stub_omniauth
+    stub_omniauth(provider, omniauth_params)
+    stub_devise
     login_as user
     visit edit_user_registration_path
   end
 
   context "when provider is Facebook" do
-    let(:provider) { 'facebook' }
+    let(:provider) { :facebook }
 
     scenario "user adds social network" do
       expect(page).to have_link("Facebook")
@@ -28,11 +31,13 @@ feature "Add/Remove social networks" do
 
       expect(page).to have_content("Social profile already linked.")
       expect(page.all("ul.js-social-links li").size).to eq(1)
+
+      #click X, expect to delete
     end
   end
 
   context "when provider is Facebook" do
-    let(:provider) { 'google_oauth2' }
+    let(:provider) { :google_oauth2 }
 
     scenario "user adds social network" do
       expect(page).to have_link("Google")
@@ -50,12 +55,5 @@ feature "Add/Remove social networks" do
       expect(page).to have_content("Social profile already linked.")
       expect(page.all("ul.js-social-links li").size).to eq(1)
     end
-  end
-
-  def stub_omniauth
-    OmniAuth.config.test_mode                       = true
-    OmniAuth.config.mock_auth[provider.to_sym]      = omniauth_mock
-    Rails.application.env_config["omniauth.auth"]   = omniauth_mock
-    Rails.application.env_config["devise.mapping"]  = Devise.mappings[:user]
   end
 end
