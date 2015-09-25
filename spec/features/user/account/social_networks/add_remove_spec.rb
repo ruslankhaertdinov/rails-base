@@ -27,12 +27,12 @@ feature "Add/Remove social profiles" do
       click_link "Facebook"
       expect(page).to have_content("Social profile already linked.")
 
-      click_link "X"
+      click_link "x"
       expect(page).not_to have_content("Linked social networks")
     end
   end
 
-  context "when provider is Facebook" do
+  context "when provider is Google" do
     let(:provider) { :google_oauth2 }
 
     scenario "user adds social network" do
@@ -47,7 +47,7 @@ feature "Add/Remove social profiles" do
       click_link "Google"
       expect(page).to have_content("Social profile already linked.")
 
-      click_link "X"
+      click_link "x"
       expect(page).not_to have_content("Linked social networks")
     end
   end
