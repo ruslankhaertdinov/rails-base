@@ -8,7 +8,7 @@ feature "Sign Up" do
 
   before { stub_omniauth(provider, omniauth_params) }
 
-  context "when user and social link not exist" do
+  context "when user and social profile not exist" do
     before { visit root_path }
 
     context "when provider is Google" do
@@ -34,11 +34,11 @@ feature "Sign Up" do
     end
   end
 
-  context "when social link and user exists" do
+  context "when user and social profile exist" do
     let(:user) { create(:user, :confirmed, user_attributes) }
 
     before do
-      user.social_links.create(provider: provider, uid: uid)
+      user.social_profiles.create(provider: provider, uid: uid)
       visit root_path
     end
 
