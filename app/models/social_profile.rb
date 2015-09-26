@@ -7,12 +7,4 @@ class SocialProfile < ActiveRecord::Base
   def self.from_omniauth(auth)
     find_by(provider: auth.provider, uid: auth.uid)
   end
-
-  def provider_name
-    if provider == "google_oauth2"
-      "Google"
-    else
-      provider.titleize
-    end
-  end
 end
