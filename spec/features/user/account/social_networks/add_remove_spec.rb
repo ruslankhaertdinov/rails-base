@@ -28,6 +28,7 @@ feature "Add/Remove social profiles" do
       expect(page).to have_content("Social profile already linked.")
 
       click_link "x"
+      expect(page).to have_content("Successfully destroyed social link.")
       expect(page).not_to have_content("Linked social networks")
     end
   end
@@ -48,6 +49,7 @@ feature "Add/Remove social profiles" do
       expect(page).to have_content("Social profile already linked.")
 
       click_link "x"
+      expect(page).to have_content("Successfully destroyed social link.")
       expect(page).not_to have_content("Linked social networks")
     end
   end
