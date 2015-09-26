@@ -20,12 +20,12 @@ feature "Add/Remove social profiles" do
       expect(page).not_to have_content("Linked social networks")
 
       click_link "Facebook"
-      expect(page).to have_content(I18n.t "flash.actions.when_current_user.notice")
+      expect(page).to have_content(I18n.t "flash.when_current_user")
       expect(page).to have_content("Linked social networks")
       expect(page).to have_css(".js-social-profiles", text: "Facebook")
 
       click_link "Facebook"
-      expect(page).to have_content(I18n.t "flash.actions.when_current_user_and_social_profile.notice")
+      expect(page).to have_content(I18n.t "flash.when_current_user_and_social_profile")
 
       click_link "x"
       expect(page).to have_content(I18n.t "flash.actions.destroy.notice", resource_name: social_profile_name)
@@ -41,12 +41,12 @@ feature "Add/Remove social profiles" do
       expect(page).not_to have_content("Linked social networks")
 
       click_link "Google"
-      expect(page).to have_content(I18n.t "flash.actions.when_current_user.notice")
+      expect(page).to have_content(I18n.t "flash.when_current_user")
       expect(page).to have_content("Linked social networks")
       expect(page).to have_css(".js-social-profiles", text: "Google")
 
       click_link "Google"
-      expect(page).to have_content(I18n.t "flash.actions.when_current_user_and_social_profile.notice")
+      expect(page).to have_content(I18n.t "flash.when_current_user_and_social_profile")
 
       click_link "x"
       expect(page).to have_content(I18n.t "flash.actions.destroy.notice", resource_name: social_profile_name)

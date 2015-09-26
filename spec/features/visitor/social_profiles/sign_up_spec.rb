@@ -17,7 +17,7 @@ feature "Sign Up" do
       scenario "Visitor signs up through provider" do
         click_link "Sign in with Google"
 
-        expect(page).to have_content("Signed up successfully.")
+        expect(page).to have_content(I18n.t "flash.when_first_visit")
         expect(page).to have_text(registered_user.email)
       end
     end
@@ -28,7 +28,7 @@ feature "Sign Up" do
       scenario "Visitor signs up through provider" do
         click_link "Sign in with Facebook"
 
-        expect(page).to have_content("Signed up successfully.")
+        expect(page).to have_content(I18n.t "flash.when_first_visit")
         expect(page).to have_text(registered_user.email)
       end
     end
@@ -48,7 +48,7 @@ feature "Sign Up" do
       scenario "Visitor signs in through provider" do
         click_link "Sign in with Google"
 
-        expect(page).to have_content("Signed in successfully.")
+        expect(page).to have_content(I18n.t "flash.when_social_profile")
         expect(page).to have_text(registered_user.email)
       end
     end
@@ -59,7 +59,7 @@ feature "Sign Up" do
       scenario "Visitor signs in through provider" do
         click_link "Sign in with Facebook"
 
-        expect(page).to have_content("Signed in successfully.")
+        expect(page).to have_content(I18n.t "flash.when_social_profile")
         expect(page).to have_text(registered_user.email)
       end
     end
