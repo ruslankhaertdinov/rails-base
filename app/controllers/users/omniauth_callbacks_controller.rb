@@ -31,24 +31,24 @@ module Users
     end
 
     def when_current_user_and_social_profile
-      flash[:notice] = "Social profile already linked."
+      flash[:notice] = t "flash.actions.when_current_user_and_social_profile.notice"
       redirect_to edit_user_registration_url
     end
 
     def when_current_user
       current_user.social_profiles.create(provider: auth.provider, uid: auth.uid)
-      flash[:notice] = "Successfully created social profile."
+      flash[:notice] = t "flash.actions.when_current_user.notice"
       redirect_to edit_user_registration_url
     end
 
     def when_social_profile
-      flash[:notice] = "Signed in successfully."
+      flash[:notice] = t "flash.actions.when_social_profile.notice"
       sign_in_and_redirect(:user, social_profile.user)
     end
 
     def when_first_visit
       user_from_omniauth.social_profiles.create(provider: auth.provider, uid: auth.uid)
-      flash[:notice] = "Signed up successfully."
+      flash[:notice] = t "flash.actions.when_first_visit.notice"
       sign_in_and_redirect(:user, user_from_omniauth)
     end
 

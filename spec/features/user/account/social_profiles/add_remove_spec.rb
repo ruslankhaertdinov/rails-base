@@ -20,15 +20,15 @@ feature "Add/Remove social profiles" do
       expect(page).not_to have_content("Linked social networks")
 
       click_link "Facebook"
-      expect(page).to have_content("Successfully created social profile.")
+      expect(page).to have_content(I18n.t "flash.actions.when_current_user.notice")
       expect(page).to have_content("Linked social networks")
       expect(page).to have_css(".js-social-profiles", text: "Facebook")
 
       click_link "Facebook"
-      expect(page).to have_content("Social profile already linked.")
+      expect(page).to have_content(I18n.t "flash.actions.when_current_user_and_social_profile.notice")
 
       click_link "x"
-      expect(page).to have_content("Successfully destroyed social profile.")
+      expect(page).to have_content(I18n.t "flash.actions.destroy.notice", resource_name: social_profile_name)
       expect(page).not_to have_content("Linked social networks")
     end
   end
@@ -41,16 +41,20 @@ feature "Add/Remove social profiles" do
       expect(page).not_to have_content("Linked social networks")
 
       click_link "Google"
-      expect(page).to have_content("Successfully created social profile.")
+      expect(page).to have_content(I18n.t "flash.actions.when_current_user.notice")
       expect(page).to have_content("Linked social networks")
       expect(page).to have_css(".js-social-profiles", text: "Google")
 
       click_link "Google"
-      expect(page).to have_content("Social profile already linked.")
+      expect(page).to have_content(I18n.t "flash.actions.when_current_user_and_social_profile.notice")
 
       click_link "x"
-      expect(page).to have_content("Successfully destroyed social profile.")
+      expect(page).to have_content(I18n.t "flash.actions.destroy.notice", resource_name: social_profile_name)
       expect(page).not_to have_content("Linked social networks")
     end
+  end
+
+  def social_profile_name
+    SocialProfile.model_name.human
   end
 end
