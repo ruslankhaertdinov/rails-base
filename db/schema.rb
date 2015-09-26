@@ -18,8 +18,8 @@ ActiveRecord::Schema.define(version: 20150921193442) do
 
   create_table "social_profiles", force: :cascade do |t|
     t.integer "user_id"
-    t.string  "provider"
-    t.string  "uid"
+    t.string  "provider", null: false
+    t.string  "uid",      null: false
   end
 
   add_index "social_profiles", ["provider"], name: "index_social_profiles_on_provider", using: :btree
