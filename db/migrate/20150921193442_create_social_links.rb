@@ -1,7 +1,7 @@
 class CreateSocialLinks < ActiveRecord::Migration
   def change
     create_table :social_links do |t|
-      t.integer :user_id
+      t.references :user, index: true
       t.string :provider
       t.string :uid
     end
