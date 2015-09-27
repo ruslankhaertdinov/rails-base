@@ -1,6 +1,6 @@
 h6
   - if social_profiles.any?
-    b Linked social networks
+    b Linked social networks:
     ul.js-social-profiles
       - social_profiles.each do |social_profile|
         li
@@ -11,5 +11,7 @@ h6
   - else
     b Sign in through one of these services:
 
-  p = link_to "Google", user_omniauth_authorize_path(:google_oauth2)
-  p = link_to "Facebook", user_omniauth_authorize_path(:facebook)
+  p
+    = link_to "Google", user_omniauth_authorize_path(:google_oauth2)
+    | &emsp;
+    = link_to "Facebook", user_omniauth_authorize_path(:facebook)
