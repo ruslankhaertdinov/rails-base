@@ -41,8 +41,7 @@ class OauthOrganizer
         current_user.social_profiles.create!(uid: auth.uid, provider: auth.provider)
         current_user
       else
-        fail OauthError, "Sorry, but yours #{auth.provider.titleize} failed verification.
-          Seems like yours #{auth.provider.titleize} account hasn't been verified."
+        fail_oauth_error
       end
     end
   end
@@ -57,8 +56,12 @@ class OauthOrganizer
       user_from_omniauth.save
       user_from_omniauth
     else
-      fail OauthError, "Sorry, but yours #{auth.provider.titleize} failed verification.
-        Seems like yours #{auth.provider.titleize} account hasn't been verified."
+      fail_oauth_error
     end
+  end
+
+  def fail_oauth_error
+    fail OauthError, "Sorry, but yours #{auth.provider.to_s.titleize} failed verification.
+      Seems like yours #{auth.provider.to_s.titleize} account hasn't been verified."
   end
 end
