@@ -11,10 +11,10 @@ class OauthOrganizer
   end
 
   def call
-    current_user_and_social_profile_present ||
+    current_user_and_social_profile_exists ||
       current_user_and_new_social_profile ||
-      only_social_profile_present ||
-      only_new_social_profile
+      social_profile_exists ||
+      new_social_profile
   end
 
   private
@@ -24,14 +24,14 @@ class OauthOrganizer
   end
 
   def auth_verified?
-    AuthVerificationPolicy.verified?(auth)
+    @auth_verified ||= AuthVerificationPolicy.verified?(auth)
   end
 
-  def user_from_omniauth
-    @user_from_omniauth ||= User.from_omniauth(auth)
+  def user
+    @user ||= User.from_omniauth(auth)
   end
 
-  def current_user_and_social_profile_present
+  def current_user_and_social_profile_exists
     current_user if current_user && social_profile
   end
 
@@ -46,22 +46,22 @@ class OauthOrganizer
     end
   end
 
-  def only_social_profile_present
+  def social_profile_exists
     social_profile.user if current_user.nil? && social_profile
   end
 
-  def only_new_social_profile
+  def new_social_profile
     if auth_verified?
-      user_from_omniauth.apply_omniauth(auth)
-      user_from_omniauth.save
-      user_from_omniauth
+      user.apply_omniauth(auth)
+      user.save
+      user
     else
       fail_oauth_error
     end
   end
 
   def fail_oauth_error
-    fail OauthError, "Sorry, but yours #{auth.provider.to_s.titleize} failed verification.
+    fail OauthError, "Sorry, but yours #{auth.provider.to_s.titleize} failed verification. \
       Seems like yours #{auth.provider.to_s.titleize} account hasn't been verified."
   end
 end

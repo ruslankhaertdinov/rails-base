@@ -1,4 +1,4 @@
-module FeatureHelpers
+module OauthHelpers
   def stub_omniauth(provider, omniauth_mock)
     OmniAuth.config.test_mode                     = true
     OmniAuth.config.mock_auth[provider]           = omniauth_mock
