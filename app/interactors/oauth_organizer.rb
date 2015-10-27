@@ -11,7 +11,7 @@ class OauthOrganizer
   end
 
   def call
-    current_user_and_social_profile_exists ||
+    current_user_and_social_profile_exist ||
       current_user_and_new_social_profile ||
       social_profile_exists ||
       new_social_profile
@@ -31,14 +31,15 @@ class OauthOrganizer
     @user ||= User.from_omniauth(auth)
   end
 
-  def current_user_and_social_profile_exists
+  def current_user_and_social_profile_exist
     current_user if current_user && social_profile
   end
 
   def current_user_and_new_social_profile
     if current_user && social_profile.nil?
       if auth_verified?
-        current_user.social_profiles.create!(uid: auth.uid, provider: auth.provider)
+        current_user.apply_omniauth(auth)
+        current_user.save!
         current_user
       else
         fail_oauth_error
@@ -51,6 +52,8 @@ class OauthOrganizer
   end
 
   def new_social_profile
+    return if current_user || social_profile
+
     if auth_verified?
       user.apply_omniauth(auth)
       user.save
