@@ -18,11 +18,7 @@ class OauthOrganizer
   private
 
   def user
-    @user ||= current_user || FetchUserForOauth.new(auth, auth_verified?).call
-  end
-
-  def auth_verified?
-    @auth_verified ||= AuthVerificationPolicy.verified?(auth)
+    @user ||= current_user || FetchUserForOauth.new(auth).call
   end
 
   def fail_oauth

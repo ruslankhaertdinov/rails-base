@@ -1,10 +1,9 @@
 class FetchUserForOauth
-  attr_reader :auth, :auth_verified
-  private :auth, :auth_verified
+  attr_reader :auth
+  private :auth
 
-  def initialize(auth, auth_verified)
+  def initialize(auth)
     @auth = auth
-    @auth_verified = auth_verified
   end
 
   def call
@@ -14,11 +13,15 @@ class FetchUserForOauth
   private
 
   def find_user_by_email
-    user_by_email if auth_verified
+    user_by_email if auth_verified?
   end
 
   def user_by_email
     @user_by_email ||= User.find_by(email: auth["info"]["email"])
+  end
+
+  def auth_verified?
+    @auth_verified ||= AuthVerificationPolicy.verified?(auth)
   end
 
   def find_social_profile_user
@@ -30,7 +33,7 @@ class FetchUserForOauth
   end
 
   def build_user
-    if auth_verified && user_by_email.nil?
+    if auth_verified? && user_by_email.nil?
       User.build_from_omniauth(auth)
     end
   end

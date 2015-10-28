@@ -15,10 +15,6 @@ class User < ActiveRecord::Base
     "#{self[:full_name]} (#{email})"
   end
 
-  def self.from_omniauth(auth)
-    find_by(email: auth["info"]["email"])
-  end
-
   def self.build_from_omniauth(auth)
     new(
       email: auth["info"]["email"],
