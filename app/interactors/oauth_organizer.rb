@@ -18,7 +18,7 @@ class OauthOrganizer
   private
 
   def user
-    @user ||= current_user || FetchUserForOauth.new(auth).call
+    @user ||= current_user || FetchOauthUser.new(auth).call
   end
 
   def fail_oauth

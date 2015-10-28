@@ -16,10 +16,7 @@ class User < ActiveRecord::Base
   end
 
   def self.build_from_omniauth(auth)
-    new(
-      email: auth["info"]["email"],
-      full_name: auth["info"]["name"]
-    )
+    new(email: auth["info"]["email"], full_name: auth["info"]["name"])
   end
 
   def apply_omniauth(auth)

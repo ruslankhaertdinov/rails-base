@@ -1,7 +1,7 @@
-- if current_user.social_profiles.any?
+- if social_profiles.any?
   b Successfully authorized via:
   ul.js-social-profiles
-    - current_user.social_profiles.each do |social_profile|
+    - social_profiles.each do |social_profile|
       li = link_to "#{provider_name(social_profile.provider)} (#{social_profile.uid.truncate(9)}). Unauthorize?",
                    social_profile,
                    data: { confirm: "Are you sure you want to remove this social profile?" },

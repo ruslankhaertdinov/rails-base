@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe FetchUserForOauth do
+describe FetchOauthUser do
   let(:auth) { omniauth_mock("facebook", "12345", user_attributes) }
   let(:service) { described_class.new(auth) }
   let(:user_attributes) { attributes_for(:user).slice(:full_name, :email) }

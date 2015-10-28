@@ -1,4 +1,4 @@
-class FetchUserForOauth
+class FetchOauthUser
   attr_reader :auth
   private :auth
 
