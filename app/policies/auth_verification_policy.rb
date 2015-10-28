@@ -6,7 +6,7 @@ class AuthVerificationPolicy
     when "google_oauth2"
       auth.extra.raw_info.email_verified?
     else
-      fail ArgumentError, "Verification checking is not implemented for provider: '#{auth.provider}'"
+      fail ArgumentError, I18n.t("omniauth.verification.not_implemented", kind: auth.provider)
     end
   end
 end

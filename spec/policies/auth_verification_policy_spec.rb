@@ -11,6 +11,7 @@ describe AuthVerificationPolicy do
 
       before do
         allow(auth).to receive_message_chain(:info, :verified?).and_return(true)
+        allow(auth).to receive_message_chain(:extra, :raw_info, :verified?).and_return(true)
       end
 
       it "returns corresponding value" do
@@ -35,7 +36,7 @@ describe AuthVerificationPolicy do
 
       it "raises Exception" do
         expect { subject }
-          .to raise_error(ArgumentError, "Verification checking is not implemented for provider: '#{auth.provider}'")
+          .to raise_error(ArgumentError, I18n.t("omniauth.verification.not_implemented", kind: provider))
       end
     end
   end

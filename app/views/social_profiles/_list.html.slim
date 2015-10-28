@@ -10,5 +10,5 @@
 
 b Add service to sign in with:
 ul
-  - resource_class.omniauth_providers.each do |provider|
-    li = link_to provider_name(provider), omniauth_authorize_path(resource_name, provider)
+  - SocialProfile::PROVIDERS.each do |provider|
+    li = link_to provider_name(provider), user_omniauth_authorize_path(provider)
