@@ -34,7 +34,6 @@ class User < ActiveRecord::Base
 
   def connect_social_profile(auth)
     social_profile = SocialProfile.where(provider: auth["provider"], uid: auth["uid"]).first_or_initialize
-    social_profile.user == self
-    social_profile.save
+    social_profile.update(user: self)
   end
 end

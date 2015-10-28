@@ -1,17 +1,9 @@
 require "rails_helper"
 
 describe FetchUserForOauth do
-  let(:uid) { "12345" }
-  let(:provider) { "facebook" }
-  let(:user_attributes) { user.attributes.slice(:full_name, :email) }
-  let(:auth) { omniauth_mock(provider, uid, user_attributes) }
+  let(:auth) { omniauth_mock("facebook", "12345", user_attributes) }
   let(:service) { described_class.new(auth, auth_verified) }
-
-  let(:user_attributes) do
-    ActiveSupport::HashWithIndifferentAccess.new(
-      attributes_for(:user).slice(:full_name, :email, :password, :password_confirmation)
-    )
-  end
+  let(:user_attributes) { attributes_for(:user).slice(:full_name, :email) }
 
   subject { service.call }
 
