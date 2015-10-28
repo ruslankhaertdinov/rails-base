@@ -1,9 +1,8 @@
 require "rails_helper"
 
 feature "Sign Up" do
-  let(:uid) { "12345" }
   let(:registered_user) { User.find_by_email(user_attributes[:email]) }
-  let(:oauth) { omniauth_mock(provider, uid, user_attributes) }
+  let(:oauth) { omniauth_mock(provider, "12345", user_attributes) }
   let(:user_attributes) { attributes_for(:user).slice(:full_name, :email, :password, :password_confirmation) }
 
   before do
@@ -13,77 +12,75 @@ feature "Sign Up" do
     visit root_path
   end
 
-  context "when social account is verified" do
+  context "when user is new record" do
+    let!(:user) { build(:user, user_attributes) }
+
     let(:verified) { true }
 
-    context "when user and social profile not exist" do
-      context "when provider is Google" do
-        let(:provider) { :google_oauth2 }
+    context "when provider is Google" do
+      let(:provider) { :google_oauth2 }
 
-        scenario "Visitor signs up through provider" do
-          click_link "Sign in with Google"
-          expect(page).to have_field("user_full_name", with: user_attributes[:full_name])
-          expect(page).to have_field("user_email", with: user_attributes[:email])
+      scenario "Visitor signs up through provider" do
+        click_link "Sign in with Google"
+        expect(page).to have_field("user_full_name", with: user_attributes[:full_name])
+        expect(page).to have_field("user_email", with: user_attributes[:email])
 
-          fill_in "user_password", with: user_attributes[:password]
-          fill_in "user_password_confirmation", with: user_attributes[:password_confirmation]
-          click_button "Sign up"
+        fill_in "user_password", with: user_attributes[:password]
+        fill_in "user_password_confirmation", with: user_attributes[:password_confirmation]
+        click_button "Sign up"
 
-          expect(page).to have_content(I18n.t "devise.registrations.signed_up")
-          expect(page).to have_text(registered_user.email)
-        end
-      end
-
-      context "when provider is Facebook" do
-        let(:provider) { :facebook }
-
-        scenario "Visitor signs up through provider" do
-          click_link "Sign in with Facebook"
-          expect(page).to have_field("user_full_name", with: user_attributes[:full_name])
-          expect(page).to have_field("user_email", with: user_attributes[:email])
-
-          fill_in "user_password", with: user_attributes[:password]
-          fill_in "user_password_confirmation", with: user_attributes[:password_confirmation]
-          click_button "Sign up"
-
-          expect(page).to have_content(I18n.t "devise.registrations.signed_up")
-          expect(page).to have_text(registered_user.email)
-        end
+        expect(page).to have_content(I18n.t "devise.registrations.signed_up")
+        expect(page).to have_text(registered_user.email)
       end
     end
 
-    context "when user and social profile exist" do
-      let(:user) { create(:user, :confirmed, user_attributes) }
+    context "when provider is Facebook" do
+      let(:provider) { :facebook }
 
-      before do
-        user.social_profiles.create(provider: provider, uid: uid)
-      end
+      scenario "Visitor signs up through provider" do
+        click_link "Sign in with Facebook"
+        expect(page).to have_field("user_full_name", with: user_attributes[:full_name])
+        expect(page).to have_field("user_email", with: user_attributes[:email])
 
-      context "when provider is Google" do
-        let(:provider) { :google_oauth2 }
+        fill_in "user_password", with: user_attributes[:password]
+        fill_in "user_password_confirmation", with: user_attributes[:password_confirmation]
+        click_button "Sign up"
 
-        scenario "Visitor signs in through provider" do
-          click_link "Sign in with Google"
-
-          expect(page).to have_content("Successfully authenticated from Google Oauth2 account.")
-          expect(page).to have_text(registered_user.email)
-        end
-      end
-
-      context "when provider is Facebook" do
-        let(:provider) { :facebook }
-
-        scenario "Visitor signs in through provider" do
-          click_link "Sign in with Facebook"
-
-          expect(page).to have_content("Successfully authenticated from Facebook account")
-          expect(page).to have_text(registered_user.email)
-        end
+        expect(page).to have_content(I18n.t "devise.registrations.signed_up")
+        expect(page).to have_text(registered_user.email)
       end
     end
   end
 
-  context "when social account is not verified" do
+  context "when user is persisted" do
+    let!(:user) { create(:user, user_attributes) }
+
+    let(:verified) { true }
+
+    context "when provider is Google" do
+      let(:provider) { :google_oauth2 }
+
+      scenario "Visitor signs in through provider" do
+        click_link "Sign in with Google"
+
+        expect(page).to have_content("Successfully authenticated from Google Oauth2 account.")
+        expect(page).to have_text(registered_user.email)
+      end
+    end
+
+    context "when provider is Facebook" do
+      let(:provider) { :facebook }
+
+      scenario "Visitor signs in through provider" do
+        click_link "Sign in with Facebook"
+
+        expect(page).to have_content("Successfully authenticated from Facebook account")
+        expect(page).to have_text(registered_user.email)
+      end
+    end
+  end
+
+  context "when oauth can't be used for authentication" do
     let(:verified) { false }
 
     context "when provider is Google" do

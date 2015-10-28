@@ -26,9 +26,6 @@ feature "Add/Remove social profiles" do
       expect(page).to have_content("Linked social networks")
       expect(page).to have_css(".js-social-profiles", text: "Facebook")
 
-      click_link "Facebook"
-      expect(page).to have_content(notice)
-
       click_link "x"
       expect(page).to have_content(I18n.t "flash.actions.destroy.notice", resource_name: social_profile_name)
       expect(page).not_to have_content("Linked social networks")
@@ -46,9 +43,6 @@ feature "Add/Remove social profiles" do
       expect(page).to have_content(notice)
       expect(page).to have_content("Linked social networks")
       expect(page).to have_css(".js-social-profiles", text: "Google")
-
-      click_link "Google"
-      expect(page).to have_content(notice)
 
       click_link "x"
       expect(page).to have_content(I18n.t "flash.actions.destroy.notice", resource_name: social_profile_name)
