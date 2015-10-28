@@ -1,0 +1,5 @@
+en:
+  oauth:
+    authentication:
+      notice: '%{resource_name} was successfully created.'
+      alert: '%{resource_name} could not be created.'

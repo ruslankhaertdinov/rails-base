@@ -12,9 +12,7 @@ feature "Sign Up" do
     visit root_path
   end
 
-  context "when user is new record" do
-    let!(:user) { build(:user, user_attributes) }
-
+  context "when user is not persisted" do
     let(:verified) { true }
 
     context "when provider is Google" do
@@ -53,9 +51,9 @@ feature "Sign Up" do
   end
 
   context "when user is persisted" do
-    let!(:user) { create(:user, user_attributes) }
-
     let(:verified) { true }
+
+    before { create(:user, user_attributes) }
 
     context "when provider is Google" do
       let(:provider) { :google_oauth2 }
