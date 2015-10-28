@@ -4,7 +4,6 @@ feature "Add/Remove social profiles" do
   let(:user) { create(:user, :confirmed) }
   let(:user_attributes) { user.attributes.slice(:full_name, :email) }
   let(:oauth) { omniauth_mock(provider, "12345", user_attributes) }
-  let(:notice) { "Successfully authenticated" }
 
   before do
     stub_omniauth(provider, oauth)
@@ -22,7 +21,7 @@ feature "Add/Remove social profiles" do
       expect(page).not_to have_content("Successfully authorized via")
 
       click_link "Facebook"
-      expect(page).to have_content(notice)
+      expect(page).to have_content(I18n.t "devise.omniauth_callbacks.success", kind: "Facebook")
       expect(page).to have_content("Successfully authorized via")
       expect(page).to have_css(".js-social-profiles", text: "Facebook")
 
@@ -40,7 +39,7 @@ feature "Add/Remove social profiles" do
       expect(page).not_to have_content("Successfully authorized via")
 
       click_link "Google"
-      expect(page).to have_content(notice)
+      expect(page).to have_content(I18n.t "devise.omniauth_callbacks.success", kind: "Google")
       expect(page).to have_content("Successfully authorized via")
       expect(page).to have_css(".js-social-profiles", text: "Google")
 

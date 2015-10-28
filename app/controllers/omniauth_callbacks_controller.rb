@@ -35,7 +35,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def handle_error
     redirect_to new_user_session_path,
-      notice: "Your #{provider_name(auth_hash.provider)} account can't be used to sign in. \
-        Please verify it via profile page."
+      notice: t("omniauth.verification.failure", kind: provider_name(auth_hash.provider))
   end
 end

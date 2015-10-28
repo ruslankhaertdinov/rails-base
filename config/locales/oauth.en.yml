@@ -1,5 +1,4 @@
 en:
-  oauth:
-    authentication:
-      notice: '%{resource_name} was successfully created.'
-      alert: '%{resource_name} could not be created.'
+  omniauth:
+    verification:
+      failure: Your %{kind} account can't be used to sign in. Please verify it via profile page.

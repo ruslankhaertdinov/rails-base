@@ -61,7 +61,7 @@ feature "Sign Up" do
       scenario "Visitor signs in through provider" do
         click_link "Sign in with Google"
 
-        expect(page).to have_content("Successfully authenticated from Google account.")
+        expect(page).to have_content(I18n.t "devise.omniauth_callbacks.success", kind: "Google")
         expect(page).to have_text(registered_user.email)
       end
     end
@@ -72,7 +72,7 @@ feature "Sign Up" do
       scenario "Visitor signs in through provider" do
         click_link "Sign in with Facebook"
 
-        expect(page).to have_content("Successfully authenticated from Facebook account")
+        expect(page).to have_content(I18n.t "devise.omniauth_callbacks.success", kind: "Facebook")
         expect(page).to have_text(registered_user.email)
       end
     end
@@ -87,7 +87,7 @@ feature "Sign Up" do
       scenario "Visitor not able to sign up through provider" do
         click_link "Sign in with Google"
 
-        expect(page).to have_content("Your Google account can't be used to sign in. Please verify it via profile page.")
+        expect(page).to have_content(I18n.t "omniauth.verification.failure", kind: "Google")
         expect(page).not_to have_text(user_attributes[:email])
       end
     end
@@ -98,7 +98,7 @@ feature "Sign Up" do
       scenario "Visitor not able to sign up through provider" do
         click_link "Sign in with Facebook"
 
-        expect(page).to have_content("Your Facebook account can't be used to sign in. Please verify it via profile page.")
+        expect(page).to have_content(I18n.t "omniauth.verification.failure", kind: "Facebook")
         expect(page).not_to have_text(user_attributes[:email])
       end
     end
