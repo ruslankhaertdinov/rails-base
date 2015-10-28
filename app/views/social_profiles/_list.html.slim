@@ -8,7 +8,7 @@
                    method: :delete,
                    class: "js-unauthorize"
 
-b Add another service to sign in with:
+b Add service to sign in with:
 ul
   - resource_class.omniauth_providers.each do |provider|
-    li = link_to "Authorize via #{provider_name(provider)}", omniauth_authorize_path(resource_name, provider)
+    li = link_to provider_name(provider), omniauth_authorize_path(resource_name, provider)
