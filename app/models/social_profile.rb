@@ -1,5 +1,5 @@
 class SocialProfile < ActiveRecord::Base
-  PROVIDERS = %i(facebook github google_oauth2)
+  PROVIDERS = %i(facebook google_oauth2)
 
   belongs_to :user
 

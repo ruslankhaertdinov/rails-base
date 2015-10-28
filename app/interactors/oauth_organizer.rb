@@ -11,44 +11,18 @@ class OauthOrganizer
   end
 
   def call
-    user = current_user || find_user_by_email || find_social_profile_user || build_user
-    user ? connect_social_profile(user) : fail_oauth
+    user.present? ? user.connect_social_profile(auth) : fail_oauth
     user
   end
 
   private
 
-  def find_user_by_email
-    user_by_email if auth_verified?
-  end
-
-  def user_by_email
-    @user_by_email ||= User.find_by(email: auth["info"]["email"])
+  def user
+    @user ||= current_user || FetchUserForOauth.new(auth, auth_verified?).call
   end
 
   def auth_verified?
     @auth_verified ||= AuthVerificationPolicy.verified?(auth)
-  end
-
-  def find_social_profile_user
-    social_profile.try(:user)
-  end
-
-  def social_profile
-    @social_profile ||= SocialProfile.from_omniauth(auth)
-  end
-
-  def build_user
-    if auth_verified? && user_by_email.nil?
-      User.build_from_omniauth(auth)
-    end
-  end
-
-  def connect_social_profile(user)
-    return if social_profile
-
-    user.apply_omniauth(auth)
-    user.save
   end
 
   def fail_oauth

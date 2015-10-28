@@ -31,4 +31,10 @@ class User < ActiveRecord::Base
     self.full_name = auth["info"]["name"] if full_name.blank?
     social_profiles.build(provider: auth["provider"], uid: auth["uid"])
   end
+
+  def connect_social_profile(auth)
+    social_profile = SocialProfile.where(provider: auth["provider"], uid: auth["uid"]).first_or_initialize
+    social_profile.user == self
+    social_profile.save
+  end
 end
