@@ -7,7 +7,7 @@ module OauthHelpers
 
   def omniauth_mock(provider, uid, user_attrs = {})
     OmniAuth::AuthHash.new(
-      provider: provider,
+      provider: provider.to_s,
       uid: uid,
       info: { name: user_attrs[:full_name], email: user_attrs[:email] }
     )

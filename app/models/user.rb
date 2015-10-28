@@ -33,7 +33,9 @@ class User < ActiveRecord::Base
   end
 
   def connect_social_profile(auth)
-    social_profile = SocialProfile.where(provider: auth["provider"], uid: auth["uid"]).first_or_initialize
-    social_profile.update(user: self)
+    unless SocialProfile.from_omniauth(auth)
+      self.apply_omniauth(auth)
+      self.save
+    end
   end
 end
