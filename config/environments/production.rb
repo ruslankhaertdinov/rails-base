@@ -82,4 +82,14 @@ Rails.application.configure do
   # Application specific options
   #
   config.host = "auth-via-networks.herokuapp.com"
+
+  config.action_mailer.smtp_settings = {
+    :address              => "smtp.yandex.ru",
+    :port                 => 587,
+    :domain               => "yandex.ru",
+    :user_name            => ENV["EMAIL_LOGIN"],
+    :password             => ENV["EMAIL_PASSWORD"],
+    :authentication       => :plain,
+    :enable_starttls_auto => true
+  }
 end
