@@ -83,13 +83,13 @@ Rails.application.configure do
   #
   config.host = "auth-via-networks.herokuapp.com"
 
-  config.action_mailer.smtp_settings = {
-    :address              => "smtp.yandex.ru",
-    :port                 => 587,
-    :domain               => "yandex.ru",
-    :user_name            => ENV["EMAIL_LOGIN"],
-    :password             => ENV["EMAIL_PASSWORD"],
-    :authentication       => :plain,
+  ActionMailer::Base.smtp_settings = {
+    :address        => 'smtp.sendgrid.net',
+    :port           => '587',
+    :authentication => :plain,
+    :user_name      => ENV['SENDGRID_USERNAME'],
+    :password       => ENV['SENDGRID_PASSWORD'],
+    :domain         => 'heroku.com',
     :enable_starttls_auto => true
   }
 end
