@@ -5,7 +5,7 @@ class FeedbacksController < ApplicationController
   end
 
   def create
-    ApplicationMailer.feedback(feedback).deliver_now! if feedback.save
+    dispatch_feedback if feedback.save
     respond_with(feedback, location: root_path)
   end
 
@@ -13,5 +13,10 @@ class FeedbacksController < ApplicationController
 
   def feedback_attributes
     params.fetch(:feedback, {}).permit(:email, :name, :message, :phone)
+  end
+
+  def dispatch_feedback
+    ApplicationMailer.feedback(feedback).deliver_now!
+    NotifyHipchat.new(feedback).call
   end
 end
