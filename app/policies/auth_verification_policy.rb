@@ -10,20 +10,12 @@ class AuthVerificationPolicy
   end
 
   def verified?
-    request_verification_for
+    send(auth.provider)
   rescue NoMethodError
-    fail_with_error
+    fail OauthError, I18n.t("omniauth.verification.not_implemented", kind: auth.provider)
   end
 
   private
-
-  def request_verification_for
-    send(auth.provider)
-  end
-
-  def fail_with_error
-    fail ArgumentError, I18n.t("omniauth.verification.not_implemented", kind: auth.provider)
-  end
 
   def facebook
     auth.info.verified? || auth.extra.raw_info.verified?
