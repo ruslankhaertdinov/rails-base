@@ -1,4 +1,4 @@
-class AuthOrganizer
+class FetchOauthUser
   attr_reader :auth
   private :auth
 
@@ -6,17 +6,17 @@ class AuthOrganizer
     @auth = auth
   end
 
-  def user
-    found_by_uid || found_by_email || new_user
+  def call
+    user_found_by_uid || user_found_by_email || new_user
   end
 
   private
 
-  def found_by_uid
+  def user_found_by_uid
     Identity.from_omniauth(auth).try(:user)
   end
 
-  def found_by_email
+  def user_found_by_email
     FindUserByEmail.new(auth).call
   end
 
