@@ -41,7 +41,7 @@ describe ConnectIdentity do
   context "when user email not matches with oauth email" do
     let(:user) { create(:user, email: "not@matched.email", confirmed_at: nil) }
 
-    it "doesn't confirm user" do
+    it "not confirms user" do
       expect(user.confirmed?).to be_falsey
       connect_social_account
       expect(user.confirmed?).to be_falsey

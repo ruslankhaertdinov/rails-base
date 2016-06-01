@@ -17,7 +17,7 @@ feature "Connect social account" do
 
     scenario "User views alert message" do
       click_connect_fb
-      expect(page).to have_text("Please confirm your facebook account before continuing.")
+      expect(page).to have_text("Please confirm your Facebook account before continuing.")
     end
   end
 

@@ -1,5 +1,5 @@
 en:
   omniauth:
     verification:
-      failure: Your %{kind} account can't be used. Please verify it via profile page.
+      failure: Please confirm your %{kind} account before continuing.
       not_implemented: Verification checking is not implemented for %{kind}.

@@ -1,4 +1,6 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  include OmniauthHelper
+
   Identity::PROVIDERS.each do |provider|
     define_method(provider.to_s) do
       show_verification_notice and return unless auth_verified?
@@ -10,7 +12,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   private
 
   def show_verification_notice
-    redirect_to root_path, flash: { error: "Please confirm your #{auth.provider} account before continuing." }
+    redirect_to root_path, flash: { error: t("omniauth.verification.failure", kind: provider_name(auth.provider)) }
   end
 
   def auth_verified?

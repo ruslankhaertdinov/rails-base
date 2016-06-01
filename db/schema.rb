@@ -26,16 +26,6 @@ ActiveRecord::Schema.define(version: 20160531141911) do
   add_index "identities", ["uid"], name: "index_identities_on_uid", using: :btree
   add_index "identities", ["user_id"], name: "index_identities_on_user_id", using: :btree
 
-  create_table "social_profiles", force: :cascade do |t|
-    t.integer "user_id"
-    t.string  "provider", default: "", null: false
-    t.string  "uid",      default: "", null: false
-  end
-
-  add_index "social_profiles", ["provider"], name: "index_social_profiles_on_provider", using: :btree
-  add_index "social_profiles", ["uid"], name: "index_social_profiles_on_uid", using: :btree
-  add_index "social_profiles", ["user_id"], name: "index_social_profiles_on_user_id", using: :btree
-
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
