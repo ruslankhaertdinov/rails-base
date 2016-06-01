@@ -1,5 +1,5 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
-  SocialProfile::PROVIDERS.each do |provider|
+  Identity::PROVIDERS.each do |provider|
     define_method(provider.to_s) do
       show_verification_notice and return unless auth_verified?
 
@@ -15,6 +15,10 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def auth_verified?
     AuthVerificationPolicy.new(auth).verified?
+  end
+
+  def auth
+    request.env["omniauth.auth"]
   end
 
   def connect_identity

@@ -36,7 +36,7 @@ describe AuthVerificationPolicy do
 
       it "raises Exception" do
         expect { subject }
-          .to raise_error(OauthError, I18n.t("omniauth.verification.not_implemented", kind: provider))
+          .to raise_error(AuthVerificationPolicy::OauthError, I18n.t("omniauth.verification.not_implemented", kind: provider))
       end
     end
   end

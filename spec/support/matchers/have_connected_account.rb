@@ -1,7 +1,7 @@
-RSpec::Matchers.define :have_connected_account do |social_profile|
+RSpec::Matchers.define :have_connected_account do |identity|
   match do
-    within ".js-social-profiles" do
-      have_text(social_profile)
+    within ".js-identities" do
+      have_text(identity)
     end
   end
 end
