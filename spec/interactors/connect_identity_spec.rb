@@ -1,8 +1,6 @@
 require "rails_helper"
 
 describe ConnectIdentity do
-  include_context :auth_hashie
-
   let(:service) { described_class.new(user, auth_hashie) }
 
   subject(:connect_social_account) { service.call }

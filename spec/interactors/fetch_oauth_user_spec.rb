@@ -1,8 +1,6 @@
 require "rails_helper"
 
 describe FetchOauthUser do
-  include_context :auth_hashie
-
   let(:service) { described_class.new(auth_hashie) }
 
   subject(:fetched_user) { service.call }

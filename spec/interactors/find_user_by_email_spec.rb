@@ -1,8 +1,6 @@
 require "rails_helper"
 
 describe FindUserByEmail do
-  include_context :auth_hashie
-
   let(:service) { described_class.new(auth_hashie) }
 
   subject(:find_user_by_email) { service.call }

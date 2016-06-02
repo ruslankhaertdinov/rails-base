@@ -13,7 +13,7 @@ class FetchOauthUser
   private
 
   def user_found_by_uid
-    Identity.from_omniauth(auth).try(:user)
+    Identity.from_omniauth(auth)&.user
   end
 
   def user_found_by_email
