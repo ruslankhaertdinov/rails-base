@@ -2,12 +2,7 @@
   b Successfully authorized via:
   ul.js-identities
     - identities.each do |identity|
-      li = link_to "#{provider_name(identity.provider)} (#{identity.uid.truncate(9)}). Unauthorize?",
-                   identity,
-                   data: { confirm: "Are you sure you want to remove this identity?" },
-                   method: :delete,
-                   class: "js-unauthorize"
-
+      li = render "identities/provider_link", identity: identity
 b Add service to sign in with:
 ul
   - Identity::PROVIDERS.each do |provider|
