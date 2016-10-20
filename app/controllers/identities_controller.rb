@@ -5,8 +5,7 @@ class IdentitiesController < ApplicationController
   expose(:identity)
 
   def destroy
-    action = indentity.destroy ? :notice : :alert
-    flash[action] = t "flash.actions.destroy.#{action}", resource_name: Identity.model_name.human
-    redirect_to edit_user_registration_url
+    identity.destroy
+    respond_with identity, location: edit_user_registration_url
   end
 end
