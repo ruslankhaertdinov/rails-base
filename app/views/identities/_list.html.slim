@@ -1,0 +1,9 @@
+- if identities.any?
+  b Successfully authorized via:
+  ul.js-identities
+    - identities.each do |identity|
+      li = render "identities/provider_link", identity: identity
+b Add service to sign in with:
+ul
+  - Identity::PROVIDERS.each do |provider|
+    li = link_to provider_name(provider), user_omniauth_authorize_path(provider)

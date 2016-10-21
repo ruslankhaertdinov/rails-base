@@ -22,6 +22,7 @@
         = f.button :submit, "Update"
 
   .medium-6.columns.end
+    = render "identities/list", identities: current_user.identities
     h6
       b Cancel my account
     p

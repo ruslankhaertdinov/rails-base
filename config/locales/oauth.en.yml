@@ -1,0 +1,5 @@
+en:
+  omniauth:
+    verification:
+      failure: Please confirm your %{kind} account before continuing.
+      not_implemented: Verification checking is not implemented for %{kind}.
